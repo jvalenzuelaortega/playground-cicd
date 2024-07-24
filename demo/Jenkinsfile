@@ -3,22 +3,17 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                bat 'mvn -B -DskipTests clean package'
+                bat 'cd demo && mvn -B -DskipTests clean package'
             }
         }
         stage('Test') {
             steps {
-                bat 'mvn test'
-            }
-            post {
-                always {
-                    junit 'target/surefire-reports/*.xml'
-                }
+                bat 'cd demo && mvn test'
             }
         }
         stage('Finish') {
             steps {
-                bat 'mvn --version'
+                bat 'de demo && mvn --version'
             }
         }
     }
