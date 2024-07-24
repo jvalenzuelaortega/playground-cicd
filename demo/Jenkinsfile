@@ -19,18 +19,8 @@ pipeline {
         }
         stage('Finish') {
             steps {
-                bat 'cd demo && mvn --version'
+                echo 'Finish revision'
             }
-        }
-    }
-
-    post {
-        success {
-            jacoco(
-                    execPattern: '**/build/jacoco/*.exec',
-                    classPattern: '**/build/classes/java/main',
-                    sourcePattern: '**/src/main'
-            )
         }
     }
 }
