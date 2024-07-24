@@ -1,13 +1,9 @@
 pipeline {
     agent any
     stages {
-        stage("get ubication") {
-            steps {
-                bat 'cd demo'
-            }
-        }
         stage('Build') {
             steps {
+                bat 'cd demo'
                 bat 'mvn -B -DskipTests clean package'
             }
             post {
@@ -19,11 +15,13 @@ pipeline {
         }
         stage('Test') {
             steps {
+                bat 'cd demo'
                 bat 'mvn test'
             }
         }
         stage('Finish') {
             steps {
+                bat 'cd demo'
                 bat 'mvn --version'
             }
         }
