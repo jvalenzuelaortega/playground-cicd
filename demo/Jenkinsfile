@@ -3,8 +3,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                bat 'cd demo'
-                bat 'mvn -B -DskipTests clean package'
+                bat 'cd demo && mvn -B -DskipTests clean package'
             }
             post {
                 failure {
@@ -15,14 +14,12 @@ pipeline {
         }
         stage('Test') {
             steps {
-                bat 'cd demo'
-                bat 'mvn test'
+                bat 'cd demo && mvn test'
             }
         }
         stage('Finish') {
             steps {
-                bat 'cd demo'
-                bat 'mvn --version'
+                bat 'cd demo && mvn --version'
             }
         }
     }
