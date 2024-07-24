@@ -1,19 +1,24 @@
 pipeline {
     agent any
     stages {
+        stage("get ubication") {
+            steps {
+                bat 'cd demo'
+            }
+        }
         stage('Build') {
             steps {
-                bat 'cd demo && mvn -B -DskipTests clean package'
+                bat 'mvn -B -DskipTests clean package'
             }
         }
         stage('Test') {
             steps {
-                bat 'cd demo && mvn test'
+                bat 'mvn test'
             }
         }
         stage('Finish') {
             steps {
-                bat 'de demo && mvn --version'
+                bat 'mvn --version'
             }
         }
     }
