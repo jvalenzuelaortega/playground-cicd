@@ -16,7 +16,7 @@ pipeline {
             }
         }
         stage('Test') {
-            dir() {
+            dir('demo') {
                 steps {
                     // bat 'cd demo && mvn test'
                     sh 'mvn test'
