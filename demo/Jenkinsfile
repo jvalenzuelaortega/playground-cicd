@@ -16,15 +16,21 @@ pipeline {
             }
         }
         stage('Test') {
-            steps {
-                // bat 'cd demo && mvn test'
-                sh 'mvn test'
+            dir() {
+                steps {
+                    // bat 'cd demo && mvn test'
+                    sh 'mvn test'
+                }
             }
         }
         stage('Finish') {
-            steps {
-                echo 'Finish revision'
+            dir('demo') {
+                steps {
+                    echo 'Finish revision'
+                }
             }
+
+
         }
     }
 }
