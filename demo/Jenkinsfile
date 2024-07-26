@@ -1,61 +1,77 @@
 pipeline {
-    agent any
-    stages {
-        stage('Build') {
-            steps {
-                dir ('demo'){
-                    bat 'mvn -B -DskipTests clean package'
-                    // sh 'mvn -B -DskipTests clean package'
-                }
-            }
-            post {
-                failure {
-                   echo 'This will run only if failed'
-                    bat 'dir'
-                   // sh 'ls'
-                }
-            }
+  agent any
+  stages {
+    stage('Build') {
+      steps {
+        dir('demo') {
+          bat 'mvn -B -DskipTests clean package'
+          // sh 'mvn -B -DskipTests clean package'
         }
-        stage('Test') {
-            steps {
-                dir ('demo') {
-                    bat 'mvn test'
-                    //sh 'mvn test'
-                }
-            }
+      }
+      post {
+        failure {
+          echo 'This will run only if failed'
+          bat 'dir'
+          // sh 'ls'
         }
-        stage('Coverage') {
-            steps {
-                dir('demo') {
-                    bat 'mvn jacoco:report'
-                    // sh 'mvn jacoco:report'
-                }
-            }
-        }
-
-        stage('Report') {
-            steps {
-                dir('demo') {
-                    // for html plugin
-                    publishHTML(target: [
-                        reportDir: 'build/reports/jacoco/test/html',
-                        reportFiles: 'index.html',
-                        keepAll: true,
-                        alwaysLinkToLastBuild: true,
-                        allowMissing: false,
-                        noEscape: false,
-                        keepAll: true,
-                        excludeRegex: ''
-                    ])
-                }
-            }
-        }
-        stage('Finish') {
-            steps {
-                dir ('demo') {
-                    echo 'Finish revision'
-                }
-            }
-        }
+      }
     }
+    stage('Test') {
+      steps {
+        dir('demo') {
+          bat 'mvn test'
+          //sh 'mvn test'
+        }
+      }
+    }
+    stage('Coverage') {
+      steps {
+        dir('demo') {
+          bat 'mvn jacoco:report'
+          // sh 'mvn jacoco:report'
+        }
+      }
+    }
+
+    stage('Report') {
+      steps {
+        dir('demo') {
+          // for html plugin
+          publishHTML(target: [
+            reportDir: 'target/site/jacoco',
+            reportFiles: 'index.html',
+            keepAll: true,
+            alwaysLinkToLastBuild: true,
+            allowMissing: false,
+            noEscape: false
+          ])
+        }
+      }
+    }
+    stage('Finish') {
+      steps {
+        dir('demo') {
+          echo 'Finish revision'
+        }
+      }
+    }
+  }
+
+  post {
+    always {
+      // Archive build artifacts
+      archiveArtifacts artifacts: '**/target/*.jar', allowEmptyArchive: true
+
+      // Archive test results
+      junit '**/target/surefire-reports/*.xml'
+    }
+
+    success {
+      echo 'Build and tests succeeded'
+    }
+
+    failure {
+      echo 'Build or tests failed'
+    }
+  }
 }
