@@ -4,22 +4,23 @@ pipeline {
         stage('Build') {
             steps {
                 dir ('demo'){
-                    // bat 'cd demo && mvn -B -DskipTests clean package'
-                    sh 'mvn -B -DskipTests clean package'
+                    bat 'mvn -B -DskipTests clean package'
+                    // sh 'mvn -B -DskipTests clean package'
                 }
             }
             post {
                 failure {
                    echo 'This will run only if failed'
-                   sh 'ls'
+                    bat 'dir'
+                   // sh 'ls'
                 }
             }
         }
         stage('Test') {
             steps {
                 dir ('demo') {
-                    // bat 'cd demo && mvn test'
-                    sh 'mvn test'
+                    bat 'mvn test'
+                    //sh 'mvn test'
                 }
             }
         }
