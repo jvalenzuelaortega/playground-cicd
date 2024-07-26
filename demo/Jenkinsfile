@@ -24,6 +24,14 @@ pipeline {
                 }
             }
         }
+        stage('Coverage') {
+            steps {
+                dir('demo') {
+                    echo 'Aca va el coverage'
+                    // sh 'mvn jacoco:report'
+                }
+            }
+        }
         stage('Finish') {
             steps {
                 dir ('demo') {
