@@ -27,7 +27,7 @@ pipeline {
         stage('Coverage') {
             steps {
                 dir('demo') {
-                    echo 'Aca va el coverage'
+                    bat 'mvn jacoco:report'
                     // sh 'mvn jacoco:report'
                 }
             }
