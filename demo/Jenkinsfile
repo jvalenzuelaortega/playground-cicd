@@ -32,6 +32,24 @@ pipeline {
                 }
             }
         }
+
+        stage('Report') {
+            steps {
+                dir('demo') {
+                    // for html plugin
+                    publishHTML(target: [
+                        reportDir: 'build/reports/jacoco/test/html',
+                        reportFiles: 'index.html',
+                        keepAll: true,
+                        alwaysLinkToLastBuild: true,
+                        allowMissing: false,
+                        noEscape: false,
+                        keepAll: true,
+                        excludeRegex: ''
+                    ])
+                }
+            }
+        }
         stage('Finish') {
             steps {
                 dir ('demo') {
