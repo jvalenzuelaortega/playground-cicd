@@ -38,12 +38,12 @@ pipeline {
         dir('demo') {
           // for html plugin
           publishHTML(target: [
+            reportName: 'Report for demo app',
             reportDir: 'target/site/jacoco',
             reportFiles: 'index.html',
             keepAll: true,
             alwaysLinkToLastBuild: true,
-            allowMissing: false,
-            noEscape: false
+            allowMissing: false
           ])
         }
       }
