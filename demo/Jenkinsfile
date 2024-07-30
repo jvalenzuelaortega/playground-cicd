@@ -24,6 +24,14 @@ pipeline {
         }
       }
     }
+    stage('Checkstyle') {
+        steps {
+            dir('demo') {
+                bat 'mvn checkstyle:check'
+                //sh 'mvn checkstyle:check'
+            }
+        }
+    }
     stage('Coverage') {
       steps {
         dir('demo') {
