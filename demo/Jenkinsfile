@@ -4,23 +4,23 @@ pipeline {
     stage('Build') {
       steps {
         dir('demo') {
-          //bat 'mvn -B -DskipTests clean package'
-          sh 'mvn -B -DskipTests clean package'
+          bat 'mvn -B -DskipTests clean package'
+          //sh 'mvn -B -DskipTests clean package'
         }
       }
       post {
         failure {
           echo 'This will run only if failed'
-          //bat 'dir'
-          sh 'ls'
+          bat 'dir'
+          //sh 'ls'
         }
       }
     }
     stage('Test') {
       steps {
         dir('demo') {
-          //bat 'mvn test'
-          sh 'mvn test'
+          bat 'mvn test'
+          //'mvn test'
         }
       }
     }
@@ -35,8 +35,8 @@ pipeline {
     stage('Coverage') {
       steps {
         dir('demo') {
-          //bat 'mvn jacoco:report'
-          sh 'mvn jacoco:report'
+          bat 'mvn jacoco:report'
+          //'mvn jacoco:report'
         }
       }
     }
