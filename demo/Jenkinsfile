@@ -5,16 +5,12 @@ pipeline {
     BASE_DIR = 'demo'
   }
 
-  parameters {
-    string(name: 'MVNCOMAND', defaultValue: 'mvn', description: 'MVN command for executions')
-  }
-
   stages {
     stage('Build') {
       steps {
         dir(env.BASE_DIR) {
-          bat '${params.MVNCOMAND} -B -DskipTests clean package'
-          //sh '${params.MVNCOMAND} -B -DskipTests clean package'
+          bat 'mvn -B -DskipTests clean package'
+          //sh 'mvn -B -DskipTests clean package'
         }
       }
       post {
@@ -28,24 +24,24 @@ pipeline {
     stage('Test') {
       steps {
         dir(env.BASE_DIR) {
-          bat '${params.MVNCOMAND} test'
-          //'${params.MVNCOMAND} test'
+          bat 'mvn test'
+          //'mvn test'
         }
       }
     }
     stage('Checkstyle') {
         steps {
             dir(env.BASE_DIR) {
-                bat '${params.MVNCOMAND} checkstyle:check'
-                //sh '${params.MVNCOMAND} checkstyle:check'
+                bat 'mvn checkstyle:check'
+                //sh 'mvn checkstyle:check'
             }
         }
     }
     stage('Coverage') {
       steps {
         dir(env.BASE_DIR) {
-          bat '${params.MVNCOMAND} jacoco:report'
-          //'${params.MVNCOMAND} jacoco:report'
+          bat 'mvn jacoco:report'
+          //'mvn jacoco:report'
         }
       }
     }
