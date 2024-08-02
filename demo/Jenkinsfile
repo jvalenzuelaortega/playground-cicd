@@ -1,9 +1,14 @@
 pipeline {
   agent any
+  // Enviroments
+  environment {
+    BASE_DIR = 'demo'
+  }
+
   stages {
     stage('Build') {
       steps {
-        dir('demo') {
+        dir(env.BASE_DIR) {
           bat 'mvn -B -DskipTests clean package'
           //sh 'mvn -B -DskipTests clean package'
         }
@@ -18,7 +23,7 @@ pipeline {
     }
     stage('Test') {
       steps {
-        dir('demo') {
+        dir(env.BASE_DIR) {
           bat 'mvn test'
           //'mvn test'
         }
@@ -26,7 +31,7 @@ pipeline {
     }
     stage('Checkstyle') {
         steps {
-            dir('demo') {
+            dir(env.BASE_DIR) {
                 bat 'mvn checkstyle:check'
                 //sh 'mvn checkstyle:check'
             }
@@ -34,7 +39,7 @@ pipeline {
     }
     stage('Coverage') {
       steps {
-        dir('demo') {
+        dir(env.BASE_DIR) {
           bat 'mvn jacoco:report'
           //'mvn jacoco:report'
         }
@@ -43,7 +48,7 @@ pipeline {
 
     stage('Report') {
       steps {
-        dir('demo') {
+        dir(env.BASE_DIR) {
           // for html plugin
           publishHTML(target: [
             reportName: 'Report for demo app',
@@ -58,7 +63,7 @@ pipeline {
     }
     stage('Finish') {
       steps {
-        dir('demo') {
+        dir(env.BASE_DIR) {
           echo 'Finish revision'
         }
       }
