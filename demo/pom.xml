@@ -88,7 +88,9 @@
                         </goals>
                         <configuration>
                             <excludes>
-                                <exclude>com/example/**/DemoService.class</exclude>
+                                <!--<exclude>com/baeldung/**/DemoService.class</exclude>-->
+                                <exclude>com/example/**/*Dto.*</exclude>
+                                <exclude>**/config/*</exclude>
                             </excludes>
                         </configuration>
                     </execution>
