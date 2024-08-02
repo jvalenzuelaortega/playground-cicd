@@ -74,6 +74,14 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>com/example/**/DemoService.class</exclude>
+                        <exclude>com/example/**/*Dto.*</exclude>
+                        <exclude>**/config/*</exclude>
+                    </excludes>
+                </configuration>
+
                 <executions>
                     <execution>
                         <goals>
@@ -86,13 +94,6 @@
                         <goals>
                             <goal>report</goal>
                         </goals>
-                        <configuration>
-                            <excludes>
-                                <!--<exclude>com/baeldung/**/DemoService.class</exclude>-->
-                                <exclude>com/example/**/*Dto.*</exclude>
-                                <exclude>**/config/*</exclude>
-                            </excludes>
-                        </configuration>
                     </execution>
                 </executions>
             </plugin>
